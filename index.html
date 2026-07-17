@@ -12,10 +12,28 @@
  .notice{background:#fff8e1;border:1px solid #f0c000;border-left:5px solid #f0a000;border-radius:6px;
          padding:.7rem 1rem;margin:.6rem 0 1.2rem;font-size:.95rem;line-height:1.6;color:#5a4a00;}
  .notice b{color:#8a6d00;}
+ .cal-legend{display:flex;flex-wrap:wrap;gap:1.1rem;align-items:center;font-size:.85rem;
+             margin:.2rem 0 1.3rem;color:#444;}
+ .cal-legend .sw{width:14px;height:14px;border-radius:3px;display:inline-block;
+                  margin-right:.35rem;vertical-align:middle;border:1px solid rgba(0,0,0,.08);}
+ .cal-months{display:flex;flex-wrap:wrap;gap:1.6rem 2.2rem;}
+ .cal-month h3{margin:0 0 .4rem;}
+ .cal-grid{display:grid;grid-template-columns:repeat(7,34px);gap:4px;}
+ .cal-dow{width:34px;text-align:center;font-size:.72rem;color:#999;padding-bottom:.15rem;}
+ .cal-day{width:34px;height:34px;border-radius:5px;display:flex;align-items:center;justify-content:center;
+          font-size:.78rem;text-decoration:none;color:#222;transition:transform .08s;}
+ .cal-day:hover{transform:scale(1.12);}
+ .cal-day.cal-pad{visibility:hidden;}
+ .cal-day.cat-nodata{background:#eee;color:#bbb;pointer-events:none;}
+ .cal-day.cat-quiet{background:#cfe3f7;}
+ .cal-day.cat-active{background:#ffb84d;color:#5a3600;font-weight:600;}
+ .cal-day.cat-major{background:#e0483e;color:#fff;font-weight:700;}
  @media(max-width:600px){
   body{padding:.75rem;}
   h1{font-size:1.2rem;} h2{font-size:1.05rem;} h3{font-size:.95rem;}
   ul{font-size:.95rem;line-height:2.0;}
+  .cal-grid{grid-template-columns:repeat(7,30px);}
+  .cal-dow,.cal-day{width:30px;height:30px;font-size:.72rem;}
  }
 </style>
 </head>
@@ -27,62 +45,148 @@
  2. PhaseNet-DAS 的 P/S picks <b>尚待確認，不一定準確</b>。<br>
  3. Ts-Tp = <b>所有通道 P 到時中位數與 S 到時中位數之差</b>（非單一通道）；估算距離 = Ts-Tp × 8 km/s。
 </div>
-<h2>2026</h2>
-<h3>2026-07</h3>
-<ul>
-<li><a href="2026/07/20260715/index.html">2026-07-15</a></li>
-<li><a href="2026/07/20260714/index.html">2026-07-14</a></li>
-<li><a href="2026/07/20260713/index.html">2026-07-13</a></li>
-<li><a href="2026/07/20260712/index.html">2026-07-12</a></li>
-<li><a href="2026/07/20260711/index.html">2026-07-11</a></li>
-<li><a href="2026/07/20260710/index.html">2026-07-10</a></li>
-<li><a href="2026/07/20260709/index.html">2026-07-09</a></li>
-<li><a href="2026/07/20260708/index.html">2026-07-08</a></li>
-<li><a href="2026/07/20260707/index.html">2026-07-07</a></li>
-<li><a href="2026/07/20260706/index.html">2026-07-06</a></li>
-<li><a href="2026/07/20260705/index.html">2026-07-05</a></li>
-<li><a href="2026/07/20260704/index.html">2026-07-04</a></li>
-<li><a href="2026/07/20260703/index.html">2026-07-03</a></li>
-<li><a href="2026/07/20260702/index.html">2026-07-02</a></li>
-<li><a href="2026/07/20260701/index.html">2026-07-01</a></li>
-</ul>
-<h3>2026-06</h3>
-<ul>
-<li><a href="2026/06/20260630/index.html">2026-06-30</a></li>
-<li><a href="2026/06/20260629/index.html">2026-06-29</a></li>
-<li><a href="2026/06/20260628/index.html">2026-06-28</a></li>
-<li><a href="2026/06/20260627/index.html">2026-06-27</a></li>
-<li><a href="2026/06/20260626/index.html">2026-06-26</a></li>
-<li><a href="2026/06/20260625/index.html">2026-06-25</a></li>
-<li><a href="2026/06/20260624/index.html">2026-06-24</a></li>
-<li><a href="2026/06/20260623/index.html">2026-06-23</a></li>
-<li><a href="2026/06/20260622/index.html">2026-06-22</a></li>
-<li><a href="2026/06/20260621/index.html">2026-06-21</a></li>
-<li><a href="2026/06/20260620/index.html">2026-06-20</a></li>
-<li><a href="2026/06/20260619/index.html">2026-06-19</a></li>
-<li><a href="2026/06/20260618/index.html">2026-06-18</a></li>
-<li><a href="2026/06/20260617/index.html">2026-06-17</a></li>
-<li><a href="2026/06/20260616/index.html">2026-06-16</a></li>
-<li><a href="2026/06/20260615/index.html">2026-06-15</a></li>
-<li><a href="2026/06/20260614/index.html">2026-06-14</a></li>
-<li><a href="2026/06/20260613/index.html">2026-06-13</a></li>
-<li><a href="2026/06/20260612/index.html">2026-06-12</a></li>
-<li><a href="2026/06/20260611/index.html">2026-06-11</a></li>
-<li><a href="2026/06/20260610/index.html">2026-06-10</a></li>
-<li><a href="2026/06/20260609/index.html">2026-06-09</a></li>
-<li><a href="2026/06/20260608/index.html">2026-06-08</a></li>
-<li><a href="2026/06/20260607/index.html">2026-06-07</a></li>
-<li><a href="2026/06/20260606/index.html">2026-06-06</a></li>
-<li><a href="2026/06/20260605/index.html">2026-06-05</a></li>
-<li><a href="2026/06/20260604/index.html">2026-06-04</a></li>
-<li><a href="2026/06/20260603/index.html">2026-06-03</a></li>
-<li><a href="2026/06/20260602/index.html">2026-06-02</a></li>
-<li><a href="2026/06/20260601/index.html">2026-06-01</a></li>
-</ul>
-<h3>2026-05</h3>
-<ul>
-<li><a href="2026/05/20260531/index.html">2026-05-31</a></li>
-<li><a href="2026/05/20260530/index.html">2026-05-30</a></li>
-</ul>
+<div class="cal-legend">
+ <span><span class="sw" style="background:#cfe3f7"></span>有報告</span>
+ <span><span class="sw" style="background:#ffb84d"></span>有 up 事件</span>
+ <span><span class="sw" style="background:#e0483e"></span>大事件（noise_large / CWA 地震）</span>
+ <span><span class="sw" style="background:#eee"></span>無資料</span>
+</div>
+<div class="cal-months"><div class="cal-month"><h3>2026-07</h3><div class="cal-grid">
+<div class="cal-dow">日</div>
+<div class="cal-dow">一</div>
+<div class="cal-dow">二</div>
+<div class="cal-dow">三</div>
+<div class="cal-dow">四</div>
+<div class="cal-dow">五</div>
+<div class="cal-dow">六</div>
+<div class="cal-day cal-pad"></div>
+<div class="cal-day cal-pad"></div>
+<div class="cal-day cal-pad"></div>
+<a class="cal-day cat-major" href="2026/07/20260701/index.html" title="20260701: 535 events, 13 up, CWA/大事件">1</a>
+<a class="cal-day cat-major" href="2026/07/20260702/index.html" title="20260702: 415 events, 21 up, CWA/大事件">2</a>
+<a class="cal-day cat-major" href="2026/07/20260703/index.html" title="20260703: 372 events, 21 up, CWA/大事件">3</a>
+<a class="cal-day cat-active" href="2026/07/20260704/index.html" title="20260704: 377 events, 18 up">4</a>
+<a class="cal-day cat-major" href="2026/07/20260705/index.html" title="20260705: 391 events, 17 up, CWA/大事件">5</a>
+<a class="cal-day cat-active" href="2026/07/20260706/index.html" title="20260706: 387 events, 10 up">6</a>
+<a class="cal-day cat-major" href="2026/07/20260707/index.html" title="20260707: 898 events, 19 up, CWA/大事件">7</a>
+<a class="cal-day cat-major" href="2026/07/20260708/index.html" title="20260708: 1006 events, 56 up, CWA/大事件">8</a>
+<a class="cal-day cat-major" href="2026/07/20260709/index.html" title="20260709: 1343 events, 26 up, CWA/大事件">9</a>
+<a class="cal-day cat-major" href="2026/07/20260710/index.html" title="20260710: 1969 events, 10 up, CWA/大事件">10</a>
+<a class="cal-day cat-major" href="2026/07/20260711/index.html" title="20260711: 1362 events, 23 up, CWA/大事件">11</a>
+<a class="cal-day cat-active" href="2026/07/20260712/index.html" title="20260712: 435 events, 15 up">12</a>
+<a class="cal-day cat-active" href="2026/07/20260713/index.html" title="20260713: 687 events, 8 up">13</a>
+<a class="cal-day cat-active" href="2026/07/20260714/index.html" title="20260714: 644 events, 22 up">14</a>
+<a class="cal-day cat-major" href="2026/07/20260715/index.html" title="20260715: 551 events, 19 up, CWA/大事件">15</a>
+<a class="cal-day cat-active" href="2026/07/20260716/index.html" title="20260716: 634 events, 15 up">16</a>
+<div class="cal-day cat-nodata">17</div>
+<div class="cal-day cat-nodata">18</div>
+<div class="cal-day cat-nodata">19</div>
+<div class="cal-day cat-nodata">20</div>
+<div class="cal-day cat-nodata">21</div>
+<div class="cal-day cat-nodata">22</div>
+<div class="cal-day cat-nodata">23</div>
+<div class="cal-day cat-nodata">24</div>
+<div class="cal-day cat-nodata">25</div>
+<div class="cal-day cat-nodata">26</div>
+<div class="cal-day cat-nodata">27</div>
+<div class="cal-day cat-nodata">28</div>
+<div class="cal-day cat-nodata">29</div>
+<div class="cal-day cat-nodata">30</div>
+<div class="cal-day cat-nodata">31</div>
+<div class="cal-day cal-pad"></div>
+</div></div><div class="cal-month"><h3>2026-06</h3><div class="cal-grid">
+<div class="cal-dow">日</div>
+<div class="cal-dow">一</div>
+<div class="cal-dow">二</div>
+<div class="cal-dow">三</div>
+<div class="cal-dow">四</div>
+<div class="cal-dow">五</div>
+<div class="cal-dow">六</div>
+<div class="cal-day cal-pad"></div>
+<a class="cal-day cat-active" href="2026/06/20260601/index.html" title="20260601: 934 events, 20 up">1</a>
+<a class="cal-day cat-active" href="2026/06/20260602/index.html" title="20260602: 730 events, 22 up">2</a>
+<a class="cal-day cat-active" href="2026/06/20260603/index.html" title="20260603: 720 events, 29 up">3</a>
+<a class="cal-day cat-active" href="2026/06/20260604/index.html" title="20260604: 561 events, 26 up">4</a>
+<a class="cal-day cat-active" href="2026/06/20260605/index.html" title="20260605: 547 events, 42 up">5</a>
+<a class="cal-day cat-active" href="2026/06/20260606/index.html" title="20260606: 567 events, 16 up">6</a>
+<a class="cal-day cat-major" href="2026/06/20260607/index.html" title="20260607: 611 events, 15 up, CWA/大事件">7</a>
+<a class="cal-day cat-active" href="2026/06/20260608/index.html" title="20260608: 699 events, 23 up">8</a>
+<a class="cal-day cat-active" href="2026/06/20260609/index.html" title="20260609: 920 events, 13 up">9</a>
+<a class="cal-day cat-major" href="2026/06/20260610/index.html" title="20260610: 946 events, 14 up, CWA/大事件">10</a>
+<a class="cal-day cat-major" href="2026/06/20260611/index.html" title="20260611: 587 events, 22 up, CWA/大事件">11</a>
+<a class="cal-day cat-active" href="2026/06/20260612/index.html" title="20260612: 746 events, 16 up">12</a>
+<a class="cal-day cat-active" href="2026/06/20260613/index.html" title="20260613: 404 events, 20 up">13</a>
+<a class="cal-day cat-active" href="2026/06/20260614/index.html" title="20260614: 449 events, 22 up">14</a>
+<a class="cal-day cat-active" href="2026/06/20260615/index.html" title="20260615: 496 events, 33 up">15</a>
+<a class="cal-day cat-active" href="2026/06/20260616/index.html" title="20260616: 563 events, 17 up">16</a>
+<a class="cal-day cat-major" href="2026/06/20260617/index.html" title="20260617: 641 events, 26 up, CWA/大事件">17</a>
+<a class="cal-day cat-active" href="2026/06/20260618/index.html" title="20260618: 600 events, 11 up">18</a>
+<a class="cal-day cat-active" href="2026/06/20260619/index.html" title="20260619: 490 events, 23 up">19</a>
+<a class="cal-day cat-active" href="2026/06/20260620/index.html" title="20260620: 454 events, 33 up">20</a>
+<a class="cal-day cat-active" href="2026/06/20260621/index.html" title="20260621: 676 events, 20 up">21</a>
+<a class="cal-day cat-active" href="2026/06/20260622/index.html" title="20260622: 566 events, 40 up">22</a>
+<a class="cal-day cat-active" href="2026/06/20260623/index.html" title="20260623: 713 events, 24 up">23</a>
+<a class="cal-day cat-major" href="2026/06/20260624/index.html" title="20260624: 717 events, 7 up, CWA/大事件">24</a>
+<a class="cal-day cat-active" href="2026/06/20260625/index.html" title="20260625: 809 events, 22 up">25</a>
+<a class="cal-day cat-active" href="2026/06/20260626/index.html" title="20260626: 670 events, 9 up">26</a>
+<a class="cal-day cat-active" href="2026/06/20260627/index.html" title="20260627: 691 events, 12 up">27</a>
+<a class="cal-day cat-active" href="2026/06/20260628/index.html" title="20260628: 593 events, 14 up">28</a>
+<a class="cal-day cat-major" href="2026/06/20260629/index.html" title="20260629: 616 events, 13 up, CWA/大事件">29</a>
+<a class="cal-day cat-active" href="2026/06/20260630/index.html" title="20260630: 681 events, 13 up">30</a>
+<div class="cal-day cal-pad"></div>
+<div class="cal-day cal-pad"></div>
+<div class="cal-day cal-pad"></div>
+<div class="cal-day cal-pad"></div>
+</div></div><div class="cal-month"><h3>2026-05</h3><div class="cal-grid">
+<div class="cal-dow">日</div>
+<div class="cal-dow">一</div>
+<div class="cal-dow">二</div>
+<div class="cal-dow">三</div>
+<div class="cal-dow">四</div>
+<div class="cal-dow">五</div>
+<div class="cal-dow">六</div>
+<div class="cal-day cal-pad"></div>
+<div class="cal-day cal-pad"></div>
+<div class="cal-day cal-pad"></div>
+<div class="cal-day cal-pad"></div>
+<div class="cal-day cal-pad"></div>
+<div class="cal-day cat-nodata">1</div>
+<div class="cal-day cat-nodata">2</div>
+<div class="cal-day cat-nodata">3</div>
+<div class="cal-day cat-nodata">4</div>
+<div class="cal-day cat-nodata">5</div>
+<div class="cal-day cat-nodata">6</div>
+<div class="cal-day cat-nodata">7</div>
+<div class="cal-day cat-nodata">8</div>
+<div class="cal-day cat-nodata">9</div>
+<div class="cal-day cat-nodata">10</div>
+<div class="cal-day cat-nodata">11</div>
+<div class="cal-day cat-nodata">12</div>
+<div class="cal-day cat-nodata">13</div>
+<div class="cal-day cat-nodata">14</div>
+<div class="cal-day cat-nodata">15</div>
+<div class="cal-day cat-nodata">16</div>
+<div class="cal-day cat-nodata">17</div>
+<div class="cal-day cat-nodata">18</div>
+<div class="cal-day cat-nodata">19</div>
+<div class="cal-day cat-nodata">20</div>
+<div class="cal-day cat-nodata">21</div>
+<div class="cal-day cat-nodata">22</div>
+<div class="cal-day cat-nodata">23</div>
+<div class="cal-day cat-nodata">24</div>
+<div class="cal-day cat-nodata">25</div>
+<div class="cal-day cat-nodata">26</div>
+<div class="cal-day cat-nodata">27</div>
+<div class="cal-day cat-nodata">28</div>
+<div class="cal-day cat-nodata">29</div>
+<a class="cal-day cat-major" href="2026/05/20260530/index.html" title="20260530: 549 events, 56 up, CWA/大事件">30</a>
+<a class="cal-day cat-active" href="2026/05/20260531/index.html" title="20260531: 1042 events, 20 up">31</a>
+<div class="cal-day cal-pad"></div>
+<div class="cal-day cal-pad"></div>
+<div class="cal-day cal-pad"></div>
+<div class="cal-day cal-pad"></div>
+<div class="cal-day cal-pad"></div>
+<div class="cal-day cal-pad"></div>
+</div></div></div>
 </body>
 </html>
