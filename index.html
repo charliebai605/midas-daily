@@ -16,6 +16,13 @@
              margin:.2rem 0 1.3rem;color:#444;}
  .cal-legend .sw{width:14px;height:14px;border-radius:3px;display:inline-block;
                   margin-right:.35rem;vertical-align:middle;border:1px solid rgba(0,0,0,.08);}
+ .year-tabs{display:flex;gap:.3rem;margin:.8rem 0 1.2rem;border-bottom:2px solid #ddd;}
+ .year-tab{background:none;border:none;padding:.5rem 1.1rem;font-size:1.05rem;font-weight:600;
+           color:#888;cursor:pointer;border-bottom:3px solid transparent;margin-bottom:-2px;}
+ .year-tab:hover{color:#0066cc;}
+ .year-tab.active{color:#0066cc;border-bottom-color:#0066cc;}
+ .year-panel{display:none;}
+ .year-panel.active{display:block;}
  .cal-months{display:flex;flex-wrap:wrap;gap:1.6rem 2.2rem;}
  .cal-month h3{margin:0 0 .4rem;}
  .cal-grid{display:grid;grid-template-columns:repeat(7,34px);gap:4px;}
@@ -75,7 +82,7 @@
 <a class="cal-day cat-major" href="2026/08/20260808/index.html" title="20260808: 2140 events, 15 up, CWA/大事件">8</a>
 <a class="cal-day cat-major" href="2026/08/20260809/index.html" title="20260809: 524 events, 20 up, CWA/大事件">9</a>
 <a class="cal-day cat-major" href="2026/08/20260810/index.html" title="20260810: 517 events, 12 up, CWA/大事件">10</a>
-<div class="cal-day cat-nodata">11</div>
+<a class="cal-day cat-active" href="2026/08/20260811/index.html" title="20260811: 524 events, 9 up">11</a>
 <div class="cal-day cat-nodata">12</div>
 <div class="cal-day cat-nodata">13</div>
 <div class="cal-day cat-nodata">14</div>
@@ -238,5 +245,15 @@
 <div class="cal-day cal-pad"></div>
 <div class="cal-day cal-pad"></div>
 </div></div></div>
+<script>
+function showYear(y){
+  document.querySelectorAll('.year-tab').forEach(function(b){
+    b.classList.toggle('active', b.dataset.year === String(y));
+  });
+  document.querySelectorAll('.year-panel').forEach(function(p){
+    p.classList.toggle('active', p.id === 'year-' + y);
+  });
+}
+</script>
 </body>
 </html>
