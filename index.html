@@ -6,20 +6,532 @@
 <title>MiDAS Daily Reports</title>
 <style>
  body{font-family:-apple-system,Segoe UI,Roboto,sans-serif;margin:0;padding:1.5rem;background:#fafafa;color:#222;}
- h1{font-size:1.5rem;}
- ul{line-height:2.2;font-size:1.1rem;margin:1rem 0 .6rem 1.2rem;}
- a{color:#0066cc;text-decoration:none;} a:hover{text-decoration:underline;}
+ h1{font-size:1.5rem;} h2{font-size:1.25rem;margin:1.4rem 0 .3rem;border-bottom:2px solid #ccc;}
+ h3{font-size:1.0rem;margin:.8rem 0 .2rem;color:#555;}
+ ul{line-height:1.8;font-size:1.0rem;margin:.2rem 0 .6rem 1.2rem;} a{color:#0066cc;text-decoration:none;}
+ .notice{background:#fff8e1;border:1px solid #f0c000;border-left:5px solid #f0a000;border-radius:6px;
+         padding:.7rem 1rem;margin:.6rem 0 1.2rem;font-size:.95rem;line-height:1.6;color:#5a4a00;}
+ .notice b{color:#8a6d00;}
+ .cal-legend{display:flex;flex-wrap:wrap;gap:1.1rem;align-items:center;font-size:.85rem;
+             margin:.2rem 0 1.3rem;color:#444;}
+ .cal-legend .sw{width:14px;height:14px;border-radius:3px;display:inline-block;
+                  margin-right:.35rem;vertical-align:middle;border:1px solid rgba(0,0,0,.08);}
+ .year-tabs{display:flex;gap:.3rem;margin:.8rem 0 1.2rem;border-bottom:2px solid #ddd;}
+ .year-tab{background:none;border:none;padding:.5rem 1.1rem;font-size:1.05rem;font-weight:600;
+           color:#888;cursor:pointer;border-bottom:3px solid transparent;margin-bottom:-2px;}
+ .year-tab:hover{color:#0066cc;}
+ .year-tab.active{color:#0066cc;border-bottom-color:#0066cc;}
+ .year-panel{display:none;}
+ .year-panel.active{display:block;}
+ .cal-months{display:flex;flex-wrap:wrap;gap:1.6rem 2.2rem;}
+ .cal-month h3{margin:0 0 .4rem;}
+ .cal-grid{display:grid;grid-template-columns:repeat(7,34px);gap:4px;}
+ .cal-dow{width:34px;text-align:center;font-size:.72rem;color:#999;padding-bottom:.15rem;}
+ .cal-day{width:34px;height:34px;border-radius:5px;display:flex;align-items:center;justify-content:center;
+          font-size:.78rem;text-decoration:none;color:#222;transition:transform .08s;}
+ .cal-day:hover{transform:scale(1.12);}
+ .cal-day.cal-pad{visibility:hidden;}
+ .cal-day.cat-nodata{background:#eee;color:#bbb;pointer-events:none;}
+ .cal-day.cat-quiet{background:#cfe3f7;}
+ .cal-day.cat-active{background:#ffb84d;color:#5a3600;font-weight:600;}
+ .cal-day.cat-major{background:#e0483e;color:#fff;font-weight:700;}
+ .archive-nav{display:flex;flex-wrap:wrap;gap:.4rem;align-items:center;margin:.3rem 0 1rem;}
+ .archive-nav a,.archive-nav span{padding:.3rem .7rem;border-radius:5px;font-size:.85rem;
+                                   border:1px solid #ddd;background:#fff;}
+ .archive-nav a{color:#0066cc;} .archive-nav a:hover{background:#eef5ff;}
+ .archive-nav span.current{background:#0066cc;color:#fff;border-color:#0066cc;font-weight:600;}
+ @media(max-width:600px){
+  body{padding:.75rem;}
+  h1{font-size:1.2rem;} h2{font-size:1.05rem;} h3{font-size:.95rem;}
+  ul{font-size:.95rem;line-height:2.0;}
+  .cal-grid{grid-template-columns:repeat(7,30px);}
+  .cal-dow,.cal-day{width:30px;height:30px;font-size:.72rem;}
+ }
 </style>
 </head>
 <body>
 <h1>MiDAS Hole A 每日報告</h1>
-<p>報告依日曆半年份拆成獨立封存站，請選擇要查看的期間：</p>
-<ul><li><a href="https://charliebai605.github.io/midas-daily-2026h2/">2026 年 下半年</a> <b>(現役)</b></li>
-<li><a href="https://charliebai605.github.io/midas-daily-2026h1/">2026 年 上半年</a></li>
-<li><a href="https://charliebai605.github.io/midas-daily-202405/">2024 年 5 月</a></li>
-<li><a href="https://charliebai605.github.io/midas-daily-202404/">2024 年 4 月</a></li>
-<li><a href="https://charliebai605.github.io/midas-daily-202403/">2024 年 3 月</a></li>
-<li><a href="https://charliebai605.github.io/midas-daily-202402/">2024 年 2 月</a></li>
-<li><a href="https://charliebai605.github.io/midas-daily-202401/">2024 年 1 月</a></li></ul>
+<div class="archive-nav"><a href="https://charliebai605.github.io/midas-daily/">總入口</a>
+<a href="https://charliebai605.github.io/midas-daily-2026h2/">2026 年 下半年（現役）</a>
+<a href="https://charliebai605.github.io/midas-daily-2026h1/">2026 年 上半年</a>
+<a href="https://charliebai605.github.io/midas-daily-202405/">2024 年 5 月</a>
+<a href="https://charliebai605.github.io/midas-daily-202404/">2024 年 4 月</a>
+<a href="https://charliebai605.github.io/midas-daily-202403/">2024 年 3 月</a>
+<a href="https://charliebai605.github.io/midas-daily-202402/">2024 年 2 月</a>
+<a href="https://charliebai605.github.io/midas-daily-202401/">2024 年 1 月</a></div>
+<div class="notice">
+ <b>⚠ 注意事項</b><br>
+ 1. 預估到時（Ts-Tp、估算距離）<b>未使用任何速度模型</b>，僅供參考。<br>
+ 2. PhaseNet-DAS 的 P/S picks <b>尚待確認，不一定準確</b>。<br>
+ 3. Ts-Tp = <b>所有通道 P 到時中位數與 S 到時中位數之差</b>（非單一通道）；估算距離 = Ts-Tp × 8 km/s。
+</div>
+<div class="cal-legend">
+ <span><span class="sw" style="background:#cfe3f7"></span>有報告</span>
+ <span><span class="sw" style="background:#ffb84d"></span>有 up 事件</span>
+ <span><span class="sw" style="background:#e0483e"></span>大事件（noise_large / CWA 地震）</span>
+ <span><span class="sw" style="background:#eee"></span>無資料</span>
+</div>
+<div class="year-tabs"><button class="year-tab active" data-year="2026" onclick="showYear(2026)">2026</button><button class="year-tab" data-year="2024" onclick="showYear(2024)">2024</button></div><div class="year-panel active" id="year-2026"><div class="cal-months"><div class="cal-month"><h3>2026-09</h3><div class="cal-grid">
+<div class="cal-dow">日</div>
+<div class="cal-dow">一</div>
+<div class="cal-dow">二</div>
+<div class="cal-dow">三</div>
+<div class="cal-dow">四</div>
+<div class="cal-dow">五</div>
+<div class="cal-dow">六</div>
+<div class="cal-day cal-pad"></div>
+<div class="cal-day cal-pad"></div>
+<a class="cal-day cat-active" href="https://charliebai605.github.io/midas-daily-2026h2/2026/09/20260901/index.html" title="20260901: 433 events, 13 up">1</a>
+<a class="cal-day cat-active" href="https://charliebai605.github.io/midas-daily-2026h2/2026/09/20260902/index.html" title="20260902: 456 events, 12 up">2</a>
+<div class="cal-day cat-nodata">3</div>
+<div class="cal-day cat-nodata">4</div>
+<div class="cal-day cat-nodata">5</div>
+<div class="cal-day cat-nodata">6</div>
+<div class="cal-day cat-nodata">7</div>
+<div class="cal-day cat-nodata">8</div>
+<div class="cal-day cat-nodata">9</div>
+<div class="cal-day cat-nodata">10</div>
+<div class="cal-day cat-nodata">11</div>
+<div class="cal-day cat-nodata">12</div>
+<div class="cal-day cat-nodata">13</div>
+<div class="cal-day cat-nodata">14</div>
+<div class="cal-day cat-nodata">15</div>
+<div class="cal-day cat-nodata">16</div>
+<div class="cal-day cat-nodata">17</div>
+<div class="cal-day cat-nodata">18</div>
+<div class="cal-day cat-nodata">19</div>
+<div class="cal-day cat-nodata">20</div>
+<div class="cal-day cat-nodata">21</div>
+<div class="cal-day cat-nodata">22</div>
+<div class="cal-day cat-nodata">23</div>
+<div class="cal-day cat-nodata">24</div>
+<div class="cal-day cat-nodata">25</div>
+<div class="cal-day cat-nodata">26</div>
+<div class="cal-day cat-nodata">27</div>
+<div class="cal-day cat-nodata">28</div>
+<div class="cal-day cat-nodata">29</div>
+<div class="cal-day cat-nodata">30</div>
+<div class="cal-day cal-pad"></div>
+<div class="cal-day cal-pad"></div>
+<div class="cal-day cal-pad"></div>
+</div></div><div class="cal-month"><h3>2026-08</h3><div class="cal-grid">
+<div class="cal-dow">日</div>
+<div class="cal-dow">一</div>
+<div class="cal-dow">二</div>
+<div class="cal-dow">三</div>
+<div class="cal-dow">四</div>
+<div class="cal-dow">五</div>
+<div class="cal-dow">六</div>
+<div class="cal-day cal-pad"></div>
+<div class="cal-day cal-pad"></div>
+<div class="cal-day cal-pad"></div>
+<div class="cal-day cal-pad"></div>
+<div class="cal-day cal-pad"></div>
+<div class="cal-day cal-pad"></div>
+<a class="cal-day cat-active" href="https://charliebai605.github.io/midas-daily-2026h2/2026/08/20260801/index.html" title="20260801: 593 events, 26 up">1</a>
+<a class="cal-day cat-active" href="https://charliebai605.github.io/midas-daily-2026h2/2026/08/20260802/index.html" title="20260802: 651 events, 21 up">2</a>
+<a class="cal-day cat-major" href="https://charliebai605.github.io/midas-daily-2026h2/2026/08/20260803/index.html" title="20260803: 556 events, 14 up, CWA/大事件">3</a>
+<a class="cal-day cat-major" href="https://charliebai605.github.io/midas-daily-2026h2/2026/08/20260804/index.html" title="20260804: 550 events, 17 up, CWA/大事件">4</a>
+<a class="cal-day cat-active" href="https://charliebai605.github.io/midas-daily-2026h2/2026/08/20260805/index.html" title="20260805: 952 events, 97 up">5</a>
+<a class="cal-day cat-active" href="https://charliebai605.github.io/midas-daily-2026h2/2026/08/20260806/index.html" title="20260806: 723 events, 38 up">6</a>
+<a class="cal-day cat-major" href="https://charliebai605.github.io/midas-daily-2026h2/2026/08/20260807/index.html" title="20260807: 2614 events, 19 up, CWA/大事件">7</a>
+<a class="cal-day cat-major" href="https://charliebai605.github.io/midas-daily-2026h2/2026/08/20260808/index.html" title="20260808: 2140 events, 15 up, CWA/大事件">8</a>
+<a class="cal-day cat-major" href="https://charliebai605.github.io/midas-daily-2026h2/2026/08/20260809/index.html" title="20260809: 524 events, 20 up, CWA/大事件">9</a>
+<a class="cal-day cat-major" href="https://charliebai605.github.io/midas-daily-2026h2/2026/08/20260810/index.html" title="20260810: 517 events, 12 up, CWA/大事件">10</a>
+<a class="cal-day cat-active" href="https://charliebai605.github.io/midas-daily-2026h2/2026/08/20260811/index.html" title="20260811: 524 events, 9 up">11</a>
+<a class="cal-day cat-major" href="https://charliebai605.github.io/midas-daily-2026h2/2026/08/20260812/index.html" title="20260812: 569 events, 12 up, CWA/大事件">12</a>
+<a class="cal-day cat-active" href="https://charliebai605.github.io/midas-daily-2026h2/2026/08/20260813/index.html" title="20260813: 724 events, 12 up">13</a>
+<a class="cal-day cat-active" href="https://charliebai605.github.io/midas-daily-2026h2/2026/08/20260814/index.html" title="20260814: 564 events, 24 up">14</a>
+<a class="cal-day cat-major" href="https://charliebai605.github.io/midas-daily-2026h2/2026/08/20260815/index.html" title="20260815: 501 events, 14 up, CWA/大事件">15</a>
+<a class="cal-day cat-active" href="https://charliebai605.github.io/midas-daily-2026h2/2026/08/20260816/index.html" title="20260816: 450 events, 15 up">16</a>
+<a class="cal-day cat-major" href="https://charliebai605.github.io/midas-daily-2026h2/2026/08/20260817/index.html" title="20260817: 513 events, 23 up, CWA/大事件">17</a>
+<a class="cal-day cat-major" href="https://charliebai605.github.io/midas-daily-2026h2/2026/08/20260818/index.html" title="20260818: 527 events, 31 up, CWA/大事件">18</a>
+<a class="cal-day cat-major" href="https://charliebai605.github.io/midas-daily-2026h2/2026/08/20260819/index.html" title="20260819: 1034 events, 324 up, CWA/大事件">19</a>
+<a class="cal-day cat-active" href="https://charliebai605.github.io/midas-daily-2026h2/2026/08/20260820/index.html" title="20260820: 630 events, 57 up">20</a>
+<a class="cal-day cat-active" href="https://charliebai605.github.io/midas-daily-2026h2/2026/08/20260821/index.html" title="20260821: 503 events, 9 up">21</a>
+<a class="cal-day cat-major" href="https://charliebai605.github.io/midas-daily-2026h2/2026/08/20260822/index.html" title="20260822: 543 events, 13 up, CWA/大事件">22</a>
+<a class="cal-day cat-major" href="https://charliebai605.github.io/midas-daily-2026h2/2026/08/20260823/index.html" title="20260823: 343 events, 25 up, CWA/大事件">23</a>
+<a class="cal-day cat-active" href="https://charliebai605.github.io/midas-daily-2026h2/2026/08/20260824/index.html" title="20260824: 293 events, 36 up">24</a>
+<a class="cal-day cat-major" href="https://charliebai605.github.io/midas-daily-2026h2/2026/08/20260825/index.html" title="20260825: 632 events, 38 up, CWA/大事件">25</a>
+<a class="cal-day cat-major" href="https://charliebai605.github.io/midas-daily-2026h2/2026/08/20260826/index.html" title="20260826: 1189 events, 29 up, CWA/大事件">26</a>
+<a class="cal-day cat-active" href="https://charliebai605.github.io/midas-daily-2026h2/2026/08/20260827/index.html" title="20260827: 455 events, 6 up">27</a>
+<a class="cal-day cat-major" href="https://charliebai605.github.io/midas-daily-2026h2/2026/08/20260828/index.html" title="20260828: 394 events, 24 up, CWA/大事件">28</a>
+<a class="cal-day cat-major" href="https://charliebai605.github.io/midas-daily-2026h2/2026/08/20260829/index.html" title="20260829: 336 events, 13 up, CWA/大事件">29</a>
+<a class="cal-day cat-major" href="https://charliebai605.github.io/midas-daily-2026h2/2026/08/20260830/index.html" title="20260830: 281 events, 22 up, CWA/大事件">30</a>
+<a class="cal-day cat-active" href="https://charliebai605.github.io/midas-daily-2026h2/2026/08/20260831/index.html" title="20260831: 370 events, 19 up">31</a>
+<div class="cal-day cal-pad"></div>
+<div class="cal-day cal-pad"></div>
+<div class="cal-day cal-pad"></div>
+<div class="cal-day cal-pad"></div>
+<div class="cal-day cal-pad"></div>
+</div></div><div class="cal-month"><h3>2026-07</h3><div class="cal-grid">
+<div class="cal-dow">日</div>
+<div class="cal-dow">一</div>
+<div class="cal-dow">二</div>
+<div class="cal-dow">三</div>
+<div class="cal-dow">四</div>
+<div class="cal-dow">五</div>
+<div class="cal-dow">六</div>
+<div class="cal-day cal-pad"></div>
+<div class="cal-day cal-pad"></div>
+<div class="cal-day cal-pad"></div>
+<a class="cal-day cat-major" href="https://charliebai605.github.io/midas-daily-2026h2/2026/07/20260701/index.html" title="20260701: 535 events, 13 up, CWA/大事件">1</a>
+<a class="cal-day cat-major" href="https://charliebai605.github.io/midas-daily-2026h2/2026/07/20260702/index.html" title="20260702: 415 events, 21 up, CWA/大事件">2</a>
+<a class="cal-day cat-major" href="https://charliebai605.github.io/midas-daily-2026h2/2026/07/20260703/index.html" title="20260703: 372 events, 21 up, CWA/大事件">3</a>
+<a class="cal-day cat-active" href="https://charliebai605.github.io/midas-daily-2026h2/2026/07/20260704/index.html" title="20260704: 377 events, 18 up">4</a>
+<a class="cal-day cat-major" href="https://charliebai605.github.io/midas-daily-2026h2/2026/07/20260705/index.html" title="20260705: 391 events, 17 up, CWA/大事件">5</a>
+<a class="cal-day cat-active" href="https://charliebai605.github.io/midas-daily-2026h2/2026/07/20260706/index.html" title="20260706: 387 events, 10 up">6</a>
+<a class="cal-day cat-major" href="https://charliebai605.github.io/midas-daily-2026h2/2026/07/20260707/index.html" title="20260707: 898 events, 19 up, CWA/大事件">7</a>
+<a class="cal-day cat-major" href="https://charliebai605.github.io/midas-daily-2026h2/2026/07/20260708/index.html" title="20260708: 1006 events, 56 up, CWA/大事件">8</a>
+<a class="cal-day cat-major" href="https://charliebai605.github.io/midas-daily-2026h2/2026/07/20260709/index.html" title="20260709: 1343 events, 26 up, CWA/大事件">9</a>
+<a class="cal-day cat-major" href="https://charliebai605.github.io/midas-daily-2026h2/2026/07/20260710/index.html" title="20260710: 1969 events, 10 up, CWA/大事件">10</a>
+<a class="cal-day cat-major" href="https://charliebai605.github.io/midas-daily-2026h2/2026/07/20260711/index.html" title="20260711: 1362 events, 23 up, CWA/大事件">11</a>
+<a class="cal-day cat-active" href="https://charliebai605.github.io/midas-daily-2026h2/2026/07/20260712/index.html" title="20260712: 435 events, 15 up">12</a>
+<a class="cal-day cat-active" href="https://charliebai605.github.io/midas-daily-2026h2/2026/07/20260713/index.html" title="20260713: 687 events, 8 up">13</a>
+<a class="cal-day cat-active" href="https://charliebai605.github.io/midas-daily-2026h2/2026/07/20260714/index.html" title="20260714: 644 events, 22 up">14</a>
+<a class="cal-day cat-major" href="https://charliebai605.github.io/midas-daily-2026h2/2026/07/20260715/index.html" title="20260715: 551 events, 19 up, CWA/大事件">15</a>
+<a class="cal-day cat-active" href="https://charliebai605.github.io/midas-daily-2026h2/2026/07/20260716/index.html" title="20260716: 634 events, 15 up">16</a>
+<a class="cal-day cat-major" href="https://charliebai605.github.io/midas-daily-2026h2/2026/07/20260717/index.html" title="20260717: 755 events, 11 up, CWA/大事件">17</a>
+<a class="cal-day cat-active" href="https://charliebai605.github.io/midas-daily-2026h2/2026/07/20260718/index.html" title="20260718: 424 events, 15 up">18</a>
+<a class="cal-day cat-major" href="https://charliebai605.github.io/midas-daily-2026h2/2026/07/20260719/index.html" title="20260719: 469 events, 25 up, CWA/大事件">19</a>
+<a class="cal-day cat-active" href="https://charliebai605.github.io/midas-daily-2026h2/2026/07/20260720/index.html" title="20260720: 527 events, 17 up">20</a>
+<a class="cal-day cat-major" href="https://charliebai605.github.io/midas-daily-2026h2/2026/07/20260721/index.html" title="20260721: 594 events, 25 up, CWA/大事件">21</a>
+<a class="cal-day cat-major" href="https://charliebai605.github.io/midas-daily-2026h2/2026/07/20260722/index.html" title="20260722: 515 events, 32 up, CWA/大事件">22</a>
+<a class="cal-day cat-major" href="https://charliebai605.github.io/midas-daily-2026h2/2026/07/20260723/index.html" title="20260723: 551 events, 22 up, CWA/大事件">23</a>
+<a class="cal-day cat-major" href="https://charliebai605.github.io/midas-daily-2026h2/2026/07/20260724/index.html" title="20260724: 549 events, 29 up, CWA/大事件">24</a>
+<a class="cal-day cat-active" href="https://charliebai605.github.io/midas-daily-2026h2/2026/07/20260725/index.html" title="20260725: 416 events, 23 up">25</a>
+<a class="cal-day cat-major" href="https://charliebai605.github.io/midas-daily-2026h2/2026/07/20260726/index.html" title="20260726: 466 events, 17 up, CWA/大事件">26</a>
+<a class="cal-day cat-major" href="https://charliebai605.github.io/midas-daily-2026h2/2026/07/20260727/index.html" title="20260727: 523 events, 14 up, CWA/大事件">27</a>
+<a class="cal-day cat-active" href="https://charliebai605.github.io/midas-daily-2026h2/2026/07/20260728/index.html" title="20260728: 477 events, 19 up">28</a>
+<a class="cal-day cat-active" href="https://charliebai605.github.io/midas-daily-2026h2/2026/07/20260729/index.html" title="20260729: 588 events, 22 up">29</a>
+<a class="cal-day cat-major" href="https://charliebai605.github.io/midas-daily-2026h2/2026/07/20260730/index.html" title="20260730: 650 events, 18 up, CWA/大事件">30</a>
+<a class="cal-day cat-active" href="https://charliebai605.github.io/midas-daily-2026h2/2026/07/20260731/index.html" title="20260731: 531 events, 19 up">31</a>
+<div class="cal-day cal-pad"></div>
+</div></div><div class="cal-month"><h3>2026-06</h3><div class="cal-grid">
+<div class="cal-dow">日</div>
+<div class="cal-dow">一</div>
+<div class="cal-dow">二</div>
+<div class="cal-dow">三</div>
+<div class="cal-dow">四</div>
+<div class="cal-dow">五</div>
+<div class="cal-dow">六</div>
+<div class="cal-day cal-pad"></div>
+<a class="cal-day cat-active" href="https://charliebai605.github.io/midas-daily-2026h1/2026/06/20260601/index.html" title="20260601: 934 events, 20 up">1</a>
+<a class="cal-day cat-active" href="https://charliebai605.github.io/midas-daily-2026h1/2026/06/20260602/index.html" title="20260602: 730 events, 22 up">2</a>
+<a class="cal-day cat-active" href="https://charliebai605.github.io/midas-daily-2026h1/2026/06/20260603/index.html" title="20260603: 720 events, 29 up">3</a>
+<a class="cal-day cat-active" href="https://charliebai605.github.io/midas-daily-2026h1/2026/06/20260604/index.html" title="20260604: 561 events, 26 up">4</a>
+<a class="cal-day cat-active" href="https://charliebai605.github.io/midas-daily-2026h1/2026/06/20260605/index.html" title="20260605: 547 events, 42 up">5</a>
+<a class="cal-day cat-active" href="https://charliebai605.github.io/midas-daily-2026h1/2026/06/20260606/index.html" title="20260606: 567 events, 16 up">6</a>
+<a class="cal-day cat-major" href="https://charliebai605.github.io/midas-daily-2026h1/2026/06/20260607/index.html" title="20260607: 611 events, 15 up, CWA/大事件">7</a>
+<a class="cal-day cat-active" href="https://charliebai605.github.io/midas-daily-2026h1/2026/06/20260608/index.html" title="20260608: 699 events, 23 up">8</a>
+<a class="cal-day cat-active" href="https://charliebai605.github.io/midas-daily-2026h1/2026/06/20260609/index.html" title="20260609: 920 events, 13 up">9</a>
+<a class="cal-day cat-major" href="https://charliebai605.github.io/midas-daily-2026h1/2026/06/20260610/index.html" title="20260610: 946 events, 14 up, CWA/大事件">10</a>
+<a class="cal-day cat-major" href="https://charliebai605.github.io/midas-daily-2026h1/2026/06/20260611/index.html" title="20260611: 587 events, 22 up, CWA/大事件">11</a>
+<a class="cal-day cat-active" href="https://charliebai605.github.io/midas-daily-2026h1/2026/06/20260612/index.html" title="20260612: 746 events, 16 up">12</a>
+<a class="cal-day cat-active" href="https://charliebai605.github.io/midas-daily-2026h1/2026/06/20260613/index.html" title="20260613: 404 events, 20 up">13</a>
+<a class="cal-day cat-active" href="https://charliebai605.github.io/midas-daily-2026h1/2026/06/20260614/index.html" title="20260614: 449 events, 22 up">14</a>
+<a class="cal-day cat-active" href="https://charliebai605.github.io/midas-daily-2026h1/2026/06/20260615/index.html" title="20260615: 496 events, 33 up">15</a>
+<a class="cal-day cat-active" href="https://charliebai605.github.io/midas-daily-2026h1/2026/06/20260616/index.html" title="20260616: 563 events, 17 up">16</a>
+<a class="cal-day cat-major" href="https://charliebai605.github.io/midas-daily-2026h1/2026/06/20260617/index.html" title="20260617: 641 events, 26 up, CWA/大事件">17</a>
+<a class="cal-day cat-active" href="https://charliebai605.github.io/midas-daily-2026h1/2026/06/20260618/index.html" title="20260618: 600 events, 11 up">18</a>
+<a class="cal-day cat-active" href="https://charliebai605.github.io/midas-daily-2026h1/2026/06/20260619/index.html" title="20260619: 490 events, 23 up">19</a>
+<a class="cal-day cat-active" href="https://charliebai605.github.io/midas-daily-2026h1/2026/06/20260620/index.html" title="20260620: 454 events, 33 up">20</a>
+<a class="cal-day cat-active" href="https://charliebai605.github.io/midas-daily-2026h1/2026/06/20260621/index.html" title="20260621: 676 events, 20 up">21</a>
+<a class="cal-day cat-active" href="https://charliebai605.github.io/midas-daily-2026h1/2026/06/20260622/index.html" title="20260622: 566 events, 40 up">22</a>
+<a class="cal-day cat-active" href="https://charliebai605.github.io/midas-daily-2026h1/2026/06/20260623/index.html" title="20260623: 713 events, 24 up">23</a>
+<a class="cal-day cat-major" href="https://charliebai605.github.io/midas-daily-2026h1/2026/06/20260624/index.html" title="20260624: 717 events, 7 up, CWA/大事件">24</a>
+<a class="cal-day cat-active" href="https://charliebai605.github.io/midas-daily-2026h1/2026/06/20260625/index.html" title="20260625: 809 events, 22 up">25</a>
+<a class="cal-day cat-active" href="https://charliebai605.github.io/midas-daily-2026h1/2026/06/20260626/index.html" title="20260626: 670 events, 9 up">26</a>
+<a class="cal-day cat-active" href="https://charliebai605.github.io/midas-daily-2026h1/2026/06/20260627/index.html" title="20260627: 691 events, 12 up">27</a>
+<a class="cal-day cat-active" href="https://charliebai605.github.io/midas-daily-2026h1/2026/06/20260628/index.html" title="20260628: 593 events, 14 up">28</a>
+<a class="cal-day cat-major" href="https://charliebai605.github.io/midas-daily-2026h1/2026/06/20260629/index.html" title="20260629: 616 events, 13 up, CWA/大事件">29</a>
+<a class="cal-day cat-active" href="https://charliebai605.github.io/midas-daily-2026h1/2026/06/20260630/index.html" title="20260630: 681 events, 13 up">30</a>
+<div class="cal-day cal-pad"></div>
+<div class="cal-day cal-pad"></div>
+<div class="cal-day cal-pad"></div>
+<div class="cal-day cal-pad"></div>
+</div></div><div class="cal-month"><h3>2026-05</h3><div class="cal-grid">
+<div class="cal-dow">日</div>
+<div class="cal-dow">一</div>
+<div class="cal-dow">二</div>
+<div class="cal-dow">三</div>
+<div class="cal-dow">四</div>
+<div class="cal-dow">五</div>
+<div class="cal-dow">六</div>
+<div class="cal-day cal-pad"></div>
+<div class="cal-day cal-pad"></div>
+<div class="cal-day cal-pad"></div>
+<div class="cal-day cal-pad"></div>
+<div class="cal-day cal-pad"></div>
+<div class="cal-day cat-nodata">1</div>
+<div class="cal-day cat-nodata">2</div>
+<div class="cal-day cat-nodata">3</div>
+<div class="cal-day cat-nodata">4</div>
+<div class="cal-day cat-nodata">5</div>
+<div class="cal-day cat-nodata">6</div>
+<div class="cal-day cat-nodata">7</div>
+<div class="cal-day cat-nodata">8</div>
+<div class="cal-day cat-nodata">9</div>
+<div class="cal-day cat-nodata">10</div>
+<div class="cal-day cat-nodata">11</div>
+<div class="cal-day cat-nodata">12</div>
+<div class="cal-day cat-nodata">13</div>
+<div class="cal-day cat-nodata">14</div>
+<div class="cal-day cat-nodata">15</div>
+<div class="cal-day cat-nodata">16</div>
+<div class="cal-day cat-nodata">17</div>
+<div class="cal-day cat-nodata">18</div>
+<div class="cal-day cat-nodata">19</div>
+<div class="cal-day cat-nodata">20</div>
+<div class="cal-day cat-nodata">21</div>
+<div class="cal-day cat-nodata">22</div>
+<div class="cal-day cat-nodata">23</div>
+<div class="cal-day cat-nodata">24</div>
+<div class="cal-day cat-nodata">25</div>
+<div class="cal-day cat-nodata">26</div>
+<div class="cal-day cat-nodata">27</div>
+<div class="cal-day cat-nodata">28</div>
+<div class="cal-day cat-nodata">29</div>
+<a class="cal-day cat-major" href="https://charliebai605.github.io/midas-daily-2026h1/2026/05/20260530/index.html" title="20260530: 549 events, 56 up, CWA/大事件">30</a>
+<a class="cal-day cat-active" href="https://charliebai605.github.io/midas-daily-2026h1/2026/05/20260531/index.html" title="20260531: 1042 events, 20 up">31</a>
+<div class="cal-day cal-pad"></div>
+<div class="cal-day cal-pad"></div>
+<div class="cal-day cal-pad"></div>
+<div class="cal-day cal-pad"></div>
+<div class="cal-day cal-pad"></div>
+<div class="cal-day cal-pad"></div>
+</div></div></div></div><div class="year-panel" id="year-2024"><div class="cal-months"><div class="cal-month"><h3>2024-05</h3><div class="cal-grid">
+<div class="cal-dow">日</div>
+<div class="cal-dow">一</div>
+<div class="cal-dow">二</div>
+<div class="cal-dow">三</div>
+<div class="cal-dow">四</div>
+<div class="cal-dow">五</div>
+<div class="cal-dow">六</div>
+<div class="cal-day cal-pad"></div>
+<div class="cal-day cal-pad"></div>
+<div class="cal-day cal-pad"></div>
+<a class="cal-day cat-major" href="https://charliebai605.github.io/midas-daily-202405/2024/05/20240501/index.html" title="20240501: 187 events, 150 up, CWA/大事件">1</a>
+<a class="cal-day cat-major" href="https://charliebai605.github.io/midas-daily-202405/2024/05/20240502/index.html" title="20240502: 165 events, 140 up, CWA/大事件">2</a>
+<a class="cal-day cat-active" href="https://charliebai605.github.io/midas-daily-202405/2024/05/20240503/index.html" title="20240503: 164 events, 140 up">3</a>
+<a class="cal-day cat-major" href="https://charliebai605.github.io/midas-daily-202405/2024/05/20240504/index.html" title="20240504: 198 events, 158 up, CWA/大事件">4</a>
+<a class="cal-day cat-major" href="https://charliebai605.github.io/midas-daily-202405/2024/05/20240505/index.html" title="20240505: 173 events, 129 up, CWA/大事件">5</a>
+<a class="cal-day cat-major" href="https://charliebai605.github.io/midas-daily-202405/2024/05/20240506/index.html" title="20240506: 228 events, 180 up, CWA/大事件">6</a>
+<a class="cal-day cat-active" href="https://charliebai605.github.io/midas-daily-202405/2024/05/20240507/index.html" title="20240507: 237 events, 193 up">7</a>
+<a class="cal-day cat-major" href="https://charliebai605.github.io/midas-daily-202405/2024/05/20240508/index.html" title="20240508: 159 events, 120 up, CWA/大事件">8</a>
+<a class="cal-day cat-major" href="https://charliebai605.github.io/midas-daily-202405/2024/05/20240509/index.html" title="20240509: 149 events, 115 up, CWA/大事件">9</a>
+<a class="cal-day cat-major" href="https://charliebai605.github.io/midas-daily-202405/2024/05/20240510/index.html" title="20240510: 190 events, 155 up, CWA/大事件">10</a>
+<a class="cal-day cat-major" href="https://charliebai605.github.io/midas-daily-202405/2024/05/20240511/index.html" title="20240511: 188 events, 158 up, CWA/大事件">11</a>
+<a class="cal-day cat-major" href="https://charliebai605.github.io/midas-daily-202405/2024/05/20240512/index.html" title="20240512: 154 events, 120 up, CWA/大事件">12</a>
+<a class="cal-day cat-active" href="https://charliebai605.github.io/midas-daily-202405/2024/05/20240513/index.html" title="20240513: 146 events, 107 up">13</a>
+<a class="cal-day cat-major" href="https://charliebai605.github.io/midas-daily-202405/2024/05/20240514/index.html" title="20240514: 145 events, 105 up, CWA/大事件">14</a>
+<a class="cal-day cat-major" href="https://charliebai605.github.io/midas-daily-202405/2024/05/20240515/index.html" title="20240515: 150 events, 100 up, CWA/大事件">15</a>
+<a class="cal-day cat-major" href="https://charliebai605.github.io/midas-daily-202405/2024/05/20240516/index.html" title="20240516: 161 events, 116 up, CWA/大事件">16</a>
+<a class="cal-day cat-active" href="https://charliebai605.github.io/midas-daily-202405/2024/05/20240517/index.html" title="20240517: 111 events, 77 up">17</a>
+<a class="cal-day cat-major" href="https://charliebai605.github.io/midas-daily-202405/2024/05/20240518/index.html" title="20240518: 105 events, 80 up, CWA/大事件">18</a>
+<a class="cal-day cat-major" href="https://charliebai605.github.io/midas-daily-202405/2024/05/20240519/index.html" title="20240519: 127 events, 91 up, CWA/大事件">19</a>
+<a class="cal-day cat-major" href="https://charliebai605.github.io/midas-daily-202405/2024/05/20240520/index.html" title="20240520: 146 events, 106 up, CWA/大事件">20</a>
+<a class="cal-day cat-major" href="https://charliebai605.github.io/midas-daily-202405/2024/05/20240521/index.html" title="20240521: 127 events, 89 up, CWA/大事件">21</a>
+<a class="cal-day cat-major" href="https://charliebai605.github.io/midas-daily-202405/2024/05/20240522/index.html" title="20240522: 128 events, 87 up, CWA/大事件">22</a>
+<a class="cal-day cat-major" href="https://charliebai605.github.io/midas-daily-202405/2024/05/20240523/index.html" title="20240523: 146 events, 93 up, CWA/大事件">23</a>
+<a class="cal-day cat-major" href="https://charliebai605.github.io/midas-daily-202405/2024/05/20240524/index.html" title="20240524: 166 events, 123 up, CWA/大事件">24</a>
+<a class="cal-day cat-major" href="https://charliebai605.github.io/midas-daily-202405/2024/05/20240525/index.html" title="20240525: 146 events, 131 up, CWA/大事件">25</a>
+<a class="cal-day cat-active" href="https://charliebai605.github.io/midas-daily-202405/2024/05/20240526/index.html" title="20240526: 107 events, 79 up">26</a>
+<a class="cal-day cat-active" href="https://charliebai605.github.io/midas-daily-202405/2024/05/20240527/index.html" title="20240527: 201 events, 81 up">27</a>
+<a class="cal-day cat-major" href="https://charliebai605.github.io/midas-daily-202405/2024/05/20240528/index.html" title="20240528: 161 events, 81 up, CWA/大事件">28</a>
+<a class="cal-day cat-major" href="https://charliebai605.github.io/midas-daily-202405/2024/05/20240529/index.html" title="20240529: 107 events, 74 up, CWA/大事件">29</a>
+<a class="cal-day cat-major" href="https://charliebai605.github.io/midas-daily-202405/2024/05/20240530/index.html" title="20240530: 126 events, 73 up, CWA/大事件">30</a>
+<a class="cal-day cat-active" href="https://charliebai605.github.io/midas-daily-202405/2024/05/20240531/index.html" title="20240531: 137 events, 82 up">31</a>
+<div class="cal-day cal-pad"></div>
+</div></div><div class="cal-month"><h3>2024-04</h3><div class="cal-grid">
+<div class="cal-dow">日</div>
+<div class="cal-dow">一</div>
+<div class="cal-dow">二</div>
+<div class="cal-dow">三</div>
+<div class="cal-dow">四</div>
+<div class="cal-dow">五</div>
+<div class="cal-dow">六</div>
+<div class="cal-day cal-pad"></div>
+<a class="cal-day cat-major" href="https://charliebai605.github.io/midas-daily-202404/2024/04/20240401/index.html" title="20240401: 273 events, 14 up, CWA/大事件">1</a>
+<a class="cal-day cat-major" href="https://charliebai605.github.io/midas-daily-202404/2024/04/20240402/index.html" title="20240402: 247 events, 22 up, CWA/大事件">2</a>
+<a class="cal-day cat-major" href="https://charliebai605.github.io/midas-daily-202404/2024/04/20240403/index.html" title="20240403: 2072 events, 1965 up, CWA/大事件">3</a>
+<a class="cal-day cat-major" href="https://charliebai605.github.io/midas-daily-202404/2024/04/20240404/index.html" title="20240404: 1632 events, 1551 up, CWA/大事件">4</a>
+<a class="cal-day cat-major" href="https://charliebai605.github.io/midas-daily-202404/2024/04/20240405/index.html" title="20240405: 1424 events, 1364 up, CWA/大事件">5</a>
+<a class="cal-day cat-major" href="https://charliebai605.github.io/midas-daily-202404/2024/04/20240406/index.html" title="20240406: 1254 events, 1190 up, CWA/大事件">6</a>
+<a class="cal-day cat-major" href="https://charliebai605.github.io/midas-daily-202404/2024/04/20240407/index.html" title="20240407: 892 events, 834 up, CWA/大事件">7</a>
+<a class="cal-day cat-active" href="https://charliebai605.github.io/midas-daily-202404/2024/04/20240408/index.html" title="20240408: 834 events, 689 up">8</a>
+<a class="cal-day cat-major" href="https://charliebai605.github.io/midas-daily-202404/2024/04/20240409/index.html" title="20240409: 694 events, 572 up, CWA/大事件">9</a>
+<a class="cal-day cat-active" href="https://charliebai605.github.io/midas-daily-202404/2024/04/20240410/index.html" title="20240410: 578 events, 524 up">10</a>
+<a class="cal-day cat-major" href="https://charliebai605.github.io/midas-daily-202404/2024/04/20240411/index.html" title="20240411: 492 events, 448 up, CWA/大事件">11</a>
+<a class="cal-day cat-major" href="https://charliebai605.github.io/midas-daily-202404/2024/04/20240412/index.html" title="20240412: 501 events, 437 up, CWA/大事件">12</a>
+<a class="cal-day cat-major" href="https://charliebai605.github.io/midas-daily-202404/2024/04/20240413/index.html" title="20240413: 409 events, 353 up, CWA/大事件">13</a>
+<a class="cal-day cat-major" href="https://charliebai605.github.io/midas-daily-202404/2024/04/20240414/index.html" title="20240414: 400 events, 358 up, CWA/大事件">14</a>
+<a class="cal-day cat-active" href="https://charliebai605.github.io/midas-daily-202404/2024/04/20240415/index.html" title="20240415: 337 events, 294 up">15</a>
+<a class="cal-day cat-major" href="https://charliebai605.github.io/midas-daily-202404/2024/04/20240416/index.html" title="20240416: 327 events, 294 up, CWA/大事件">16</a>
+<a class="cal-day cat-major" href="https://charliebai605.github.io/midas-daily-202404/2024/04/20240417/index.html" title="20240417: 266 events, 238 up, CWA/大事件">17</a>
+<a class="cal-day cat-major" href="https://charliebai605.github.io/midas-daily-202404/2024/04/20240418/index.html" title="20240418: 349 events, 219 up, CWA/大事件">18</a>
+<a class="cal-day cat-major" href="https://charliebai605.github.io/midas-daily-202404/2024/04/20240419/index.html" title="20240419: 232 events, 185 up, CWA/大事件">19</a>
+<a class="cal-day cat-major" href="https://charliebai605.github.io/midas-daily-202404/2024/04/20240420/index.html" title="20240420: 245 events, 206 up, CWA/大事件">20</a>
+<a class="cal-day cat-major" href="https://charliebai605.github.io/midas-daily-202404/2024/04/20240421/index.html" title="20240421: 253 events, 195 up, CWA/大事件">21</a>
+<a class="cal-day cat-major" href="https://charliebai605.github.io/midas-daily-202404/2024/04/20240422/index.html" title="20240422: 884 events, 728 up, CWA/大事件">22</a>
+<a class="cal-day cat-major" href="https://charliebai605.github.io/midas-daily-202404/2024/04/20240423/index.html" title="20240423: 948 events, 836 up, CWA/大事件">23</a>
+<a class="cal-day cat-major" href="https://charliebai605.github.io/midas-daily-202404/2024/04/20240424/index.html" title="20240424: 456 events, 388 up, CWA/大事件">24</a>
+<a class="cal-day cat-major" href="https://charliebai605.github.io/midas-daily-202404/2024/04/20240425/index.html" title="20240425: 351 events, 299 up, CWA/大事件">25</a>
+<a class="cal-day cat-major" href="https://charliebai605.github.io/midas-daily-202404/2024/04/20240426/index.html" title="20240426: 406 events, 351 up, CWA/大事件">26</a>
+<a class="cal-day cat-major" href="https://charliebai605.github.io/midas-daily-202404/2024/04/20240427/index.html" title="20240427: 320 events, 268 up, CWA/大事件">27</a>
+<a class="cal-day cat-major" href="https://charliebai605.github.io/midas-daily-202404/2024/04/20240428/index.html" title="20240428: 296 events, 224 up, CWA/大事件">28</a>
+<a class="cal-day cat-major" href="https://charliebai605.github.io/midas-daily-202404/2024/04/20240429/index.html" title="20240429: 227 events, 175 up, CWA/大事件">29</a>
+<a class="cal-day cat-major" href="https://charliebai605.github.io/midas-daily-202404/2024/04/20240430/index.html" title="20240430: 198 events, 153 up, CWA/大事件">30</a>
+<div class="cal-day cal-pad"></div>
+<div class="cal-day cal-pad"></div>
+<div class="cal-day cal-pad"></div>
+<div class="cal-day cal-pad"></div>
+</div></div><div class="cal-month"><h3>2024-03</h3><div class="cal-grid">
+<div class="cal-dow">日</div>
+<div class="cal-dow">一</div>
+<div class="cal-dow">二</div>
+<div class="cal-dow">三</div>
+<div class="cal-dow">四</div>
+<div class="cal-dow">五</div>
+<div class="cal-dow">六</div>
+<div class="cal-day cal-pad"></div>
+<div class="cal-day cal-pad"></div>
+<div class="cal-day cal-pad"></div>
+<div class="cal-day cal-pad"></div>
+<div class="cal-day cal-pad"></div>
+<a class="cal-day cat-active" href="https://charliebai605.github.io/midas-daily-202403/2024/03/20240301/index.html" title="20240301: 510 events, 6 up">1</a>
+<a class="cal-day cat-major" href="https://charliebai605.github.io/midas-daily-202403/2024/03/20240302/index.html" title="20240302: 340 events, 14 up, CWA/大事件">2</a>
+<a class="cal-day cat-major" href="https://charliebai605.github.io/midas-daily-202403/2024/03/20240303/index.html" title="20240303: 76 events, 19 up, CWA/大事件">3</a>
+<a class="cal-day cat-major" href="https://charliebai605.github.io/midas-daily-202403/2024/03/20240304/index.html" title="20240304: 482 events, 7 up, CWA/大事件">4</a>
+<a class="cal-day cat-major" href="https://charliebai605.github.io/midas-daily-202403/2024/03/20240305/index.html" title="20240305: 494 events, 11 up, CWA/大事件">5</a>
+<a class="cal-day cat-active" href="https://charliebai605.github.io/midas-daily-202403/2024/03/20240306/index.html" title="20240306: 456 events, 7 up">6</a>
+<a class="cal-day cat-major" href="https://charliebai605.github.io/midas-daily-202403/2024/03/20240307/index.html" title="20240307: 247 events, 11 up, CWA/大事件">7</a>
+<a class="cal-day cat-active" href="https://charliebai605.github.io/midas-daily-202403/2024/03/20240308/index.html" title="20240308: 335 events, 14 up">8</a>
+<a class="cal-day cat-active" href="https://charliebai605.github.io/midas-daily-202403/2024/03/20240309/index.html" title="20240309: 98 events, 15 up">9</a>
+<a class="cal-day cat-major" href="https://charliebai605.github.io/midas-daily-202403/2024/03/20240310/index.html" title="20240310: 62 events, 15 up, CWA/大事件">10</a>
+<a class="cal-day cat-active" href="https://charliebai605.github.io/midas-daily-202403/2024/03/20240311/index.html" title="20240311: 335 events, 8 up">11</a>
+<a class="cal-day cat-active" href="https://charliebai605.github.io/midas-daily-202403/2024/03/20240312/index.html" title="20240312: 357 events, 11 up">12</a>
+<a class="cal-day cat-major" href="https://charliebai605.github.io/midas-daily-202403/2024/03/20240313/index.html" title="20240313: 261 events, 12 up, CWA/大事件">13</a>
+<a class="cal-day cat-active" href="https://charliebai605.github.io/midas-daily-202403/2024/03/20240314/index.html" title="20240314: 144 events, 6 up">14</a>
+<a class="cal-day cat-active" href="https://charliebai605.github.io/midas-daily-202403/2024/03/20240315/index.html" title="20240315: 103 events, 8 up">15</a>
+<a class="cal-day cat-major" href="https://charliebai605.github.io/midas-daily-202403/2024/03/20240316/index.html" title="20240316: 53 events, 18 up, CWA/大事件">16</a>
+<a class="cal-day cat-active" href="https://charliebai605.github.io/midas-daily-202403/2024/03/20240317/index.html" title="20240317: 99 events, 29 up">17</a>
+<a class="cal-day cat-active" href="https://charliebai605.github.io/midas-daily-202403/2024/03/20240318/index.html" title="20240318: 77 events, 12 up">18</a>
+<a class="cal-day cat-major" href="https://charliebai605.github.io/midas-daily-202403/2024/03/20240319/index.html" title="20240319: 661 events, 6 up, CWA/大事件">19</a>
+<a class="cal-day cat-major" href="https://charliebai605.github.io/midas-daily-202403/2024/03/20240320/index.html" title="20240320: 203 events, 6 up, CWA/大事件">20</a>
+<a class="cal-day cat-major" href="https://charliebai605.github.io/midas-daily-202403/2024/03/20240321/index.html" title="20240321: 320 events, 13 up, CWA/大事件">21</a>
+<a class="cal-day cat-major" href="https://charliebai605.github.io/midas-daily-202403/2024/03/20240322/index.html" title="20240322: 273 events, 16 up, CWA/大事件">22</a>
+<a class="cal-day cat-major" href="https://charliebai605.github.io/midas-daily-202403/2024/03/20240323/index.html" title="20240323: 149 events, 20 up, CWA/大事件">23</a>
+<a class="cal-day cat-active" href="https://charliebai605.github.io/midas-daily-202403/2024/03/20240324/index.html" title="20240324: 84 events, 23 up">24</a>
+<a class="cal-day cat-major" href="https://charliebai605.github.io/midas-daily-202403/2024/03/20240325/index.html" title="20240325: 178 events, 15 up, CWA/大事件">25</a>
+<a class="cal-day cat-active" href="https://charliebai605.github.io/midas-daily-202403/2024/03/20240326/index.html" title="20240326: 285 events, 4 up">26</a>
+<a class="cal-day cat-active" href="https://charliebai605.github.io/midas-daily-202403/2024/03/20240327/index.html" title="20240327: 141 events, 9 up">27</a>
+<a class="cal-day cat-active" href="https://charliebai605.github.io/midas-daily-202403/2024/03/20240328/index.html" title="20240328: 124 events, 5 up">28</a>
+<a class="cal-day cat-active" href="https://charliebai605.github.io/midas-daily-202403/2024/03/20240329/index.html" title="20240329: 113 events, 30 up">29</a>
+<a class="cal-day cat-active" href="https://charliebai605.github.io/midas-daily-202403/2024/03/20240330/index.html" title="20240330: 49 events, 12 up">30</a>
+<a class="cal-day cat-major" href="https://charliebai605.github.io/midas-daily-202403/2024/03/20240331/index.html" title="20240331: 69 events, 7 up, CWA/大事件">31</a>
+<div class="cal-day cal-pad"></div>
+<div class="cal-day cal-pad"></div>
+<div class="cal-day cal-pad"></div>
+<div class="cal-day cal-pad"></div>
+<div class="cal-day cal-pad"></div>
+<div class="cal-day cal-pad"></div>
+</div></div><div class="cal-month"><h3>2024-02</h3><div class="cal-grid">
+<div class="cal-dow">日</div>
+<div class="cal-dow">一</div>
+<div class="cal-dow">二</div>
+<div class="cal-dow">三</div>
+<div class="cal-dow">四</div>
+<div class="cal-dow">五</div>
+<div class="cal-dow">六</div>
+<div class="cal-day cal-pad"></div>
+<div class="cal-day cal-pad"></div>
+<div class="cal-day cal-pad"></div>
+<div class="cal-day cal-pad"></div>
+<a class="cal-day cat-major" href="https://charliebai605.github.io/midas-daily-202402/2024/02/20240201/index.html" title="20240201: 119 events, 26 up, CWA/大事件">1</a>
+<a class="cal-day cat-active" href="https://charliebai605.github.io/midas-daily-202402/2024/02/20240202/index.html" title="20240202: 129 events, 31 up">2</a>
+<a class="cal-day cat-active" href="https://charliebai605.github.io/midas-daily-202402/2024/02/20240203/index.html" title="20240203: 109 events, 37 up">3</a>
+<a class="cal-day cat-active" href="https://charliebai605.github.io/midas-daily-202402/2024/02/20240204/index.html" title="20240204: 166 events, 50 up">4</a>
+<a class="cal-day cat-active" href="https://charliebai605.github.io/midas-daily-202402/2024/02/20240205/index.html" title="20240205: 110 events, 35 up">5</a>
+<a class="cal-day cat-active" href="https://charliebai605.github.io/midas-daily-202402/2024/02/20240206/index.html" title="20240206: 60 events, 28 up">6</a>
+<a class="cal-day cat-major" href="https://charliebai605.github.io/midas-daily-202402/2024/02/20240207/index.html" title="20240207: 315 events, 18 up, CWA/大事件">7</a>
+<a class="cal-day cat-major" href="https://charliebai605.github.io/midas-daily-202402/2024/02/20240208/index.html" title="20240208: 450 events, 15 up, CWA/大事件">8</a>
+<a class="cal-day cat-active" href="https://charliebai605.github.io/midas-daily-202402/2024/02/20240209/index.html" title="20240209: 478 events, 13 up">9</a>
+<a class="cal-day cat-active" href="https://charliebai605.github.io/midas-daily-202402/2024/02/20240210/index.html" title="20240210: 169 events, 17 up">10</a>
+<a class="cal-day cat-major" href="https://charliebai605.github.io/midas-daily-202402/2024/02/20240211/index.html" title="20240211: 114 events, 38 up, CWA/大事件">11</a>
+<a class="cal-day cat-major" href="https://charliebai605.github.io/midas-daily-202402/2024/02/20240212/index.html" title="20240212: 75 events, 26 up, CWA/大事件">12</a>
+<a class="cal-day cat-major" href="https://charliebai605.github.io/midas-daily-202402/2024/02/20240213/index.html" title="20240213: 98 events, 34 up, CWA/大事件">13</a>
+<a class="cal-day cat-major" href="https://charliebai605.github.io/midas-daily-202402/2024/02/20240214/index.html" title="20240214: 69 events, 36 up, CWA/大事件">14</a>
+<a class="cal-day cat-major" href="https://charliebai605.github.io/midas-daily-202402/2024/02/20240215/index.html" title="20240215: 74 events, 23 up, CWA/大事件">15</a>
+<a class="cal-day cat-active" href="https://charliebai605.github.io/midas-daily-202402/2024/02/20240216/index.html" title="20240216: 50 events, 11 up">16</a>
+<a class="cal-day cat-major" href="https://charliebai605.github.io/midas-daily-202402/2024/02/20240217/index.html" title="20240217: 66 events, 25 up, CWA/大事件">17</a>
+<a class="cal-day cat-active" href="https://charliebai605.github.io/midas-daily-202402/2024/02/20240218/index.html" title="20240218: 52 events, 23 up">18</a>
+<a class="cal-day cat-active" href="https://charliebai605.github.io/midas-daily-202402/2024/02/20240219/index.html" title="20240219: 98 events, 17 up">19</a>
+<a class="cal-day cat-major" href="https://charliebai605.github.io/midas-daily-202402/2024/02/20240220/index.html" title="20240220: 71 events, 23 up, CWA/大事件">20</a>
+<a class="cal-day cat-major" href="https://charliebai605.github.io/midas-daily-202402/2024/02/20240221/index.html" title="20240221: 52 events, 26 up, CWA/大事件">21</a>
+<a class="cal-day cat-active" href="https://charliebai605.github.io/midas-daily-202402/2024/02/20240222/index.html" title="20240222: 190 events, 10 up">22</a>
+<a class="cal-day cat-active" href="https://charliebai605.github.io/midas-daily-202402/2024/02/20240223/index.html" title="20240223: 84 events, 21 up">23</a>
+<a class="cal-day cat-major" href="https://charliebai605.github.io/midas-daily-202402/2024/02/20240224/index.html" title="20240224: 67 events, 19 up, CWA/大事件">24</a>
+<a class="cal-day cat-major" href="https://charliebai605.github.io/midas-daily-202402/2024/02/20240225/index.html" title="20240225: 217 events, 20 up, CWA/大事件">25</a>
+<a class="cal-day cat-major" href="https://charliebai605.github.io/midas-daily-202402/2024/02/20240226/index.html" title="20240226: 394 events, 15 up, CWA/大事件">26</a>
+<a class="cal-day cat-active" href="https://charliebai605.github.io/midas-daily-202402/2024/02/20240227/index.html" title="20240227: 76 events, 11 up">27</a>
+<a class="cal-day cat-major" href="https://charliebai605.github.io/midas-daily-202402/2024/02/20240228/index.html" title="20240228: 55 events, 14 up, CWA/大事件">28</a>
+<a class="cal-day cat-major" href="https://charliebai605.github.io/midas-daily-202402/2024/02/20240229/index.html" title="20240229: 747 events, 11 up, CWA/大事件">29</a>
+<div class="cal-day cal-pad"></div>
+<div class="cal-day cal-pad"></div>
+</div></div><div class="cal-month"><h3>2024-01</h3><div class="cal-grid">
+<div class="cal-dow">日</div>
+<div class="cal-dow">一</div>
+<div class="cal-dow">二</div>
+<div class="cal-dow">三</div>
+<div class="cal-dow">四</div>
+<div class="cal-dow">五</div>
+<div class="cal-dow">六</div>
+<div class="cal-day cal-pad"></div>
+<a class="cal-day cat-major" href="https://charliebai605.github.io/midas-daily-202401/2024/01/20240101/index.html" title="20240101: 191 events, 17 up, CWA/大事件">1</a>
+<a class="cal-day cat-major" href="https://charliebai605.github.io/midas-daily-202401/2024/01/20240102/index.html" title="20240102: 128 events, 12 up, CWA/大事件">2</a>
+<a class="cal-day cat-major" href="https://charliebai605.github.io/midas-daily-202401/2024/01/20240103/index.html" title="20240103: 558 events, 9 up, CWA/大事件">3</a>
+<a class="cal-day cat-major" href="https://charliebai605.github.io/midas-daily-202401/2024/01/20240104/index.html" title="20240104: 105 events, 12 up, CWA/大事件">4</a>
+<a class="cal-day cat-major" href="https://charliebai605.github.io/midas-daily-202401/2024/01/20240105/index.html" title="20240105: 185 events, 7 up, CWA/大事件">5</a>
+<a class="cal-day cat-major" href="https://charliebai605.github.io/midas-daily-202401/2024/01/20240106/index.html" title="20240106: 42 events, 9 up, CWA/大事件">6</a>
+<a class="cal-day cat-major" href="https://charliebai605.github.io/midas-daily-202401/2024/01/20240107/index.html" title="20240107: 105 events, 9 up, CWA/大事件">7</a>
+<a class="cal-day cat-major" href="https://charliebai605.github.io/midas-daily-202401/2024/01/20240108/index.html" title="20240108: 164 events, 10 up, CWA/大事件">8</a>
+<a class="cal-day cat-active" href="https://charliebai605.github.io/midas-daily-202401/2024/01/20240109/index.html" title="20240109: 154 events, 12 up">9</a>
+<a class="cal-day cat-major" href="https://charliebai605.github.io/midas-daily-202401/2024/01/20240110/index.html" title="20240110: 680 events, 13 up, CWA/大事件">10</a>
+<a class="cal-day cat-major" href="https://charliebai605.github.io/midas-daily-202401/2024/01/20240111/index.html" title="20240111: 167 events, 7 up, CWA/大事件">11</a>
+<a class="cal-day cat-major" href="https://charliebai605.github.io/midas-daily-202401/2024/01/20240112/index.html" title="20240112: 97 events, 15 up, CWA/大事件">12</a>
+<a class="cal-day cat-active" href="https://charliebai605.github.io/midas-daily-202401/2024/01/20240113/index.html" title="20240113: 71 events, 19 up">13</a>
+<a class="cal-day cat-major" href="https://charliebai605.github.io/midas-daily-202401/2024/01/20240114/index.html" title="20240114: 74 events, 16 up, CWA/大事件">14</a>
+<a class="cal-day cat-major" href="https://charliebai605.github.io/midas-daily-202401/2024/01/20240115/index.html" title="20240115: 233 events, 9 up, CWA/大事件">15</a>
+<a class="cal-day cat-active" href="https://charliebai605.github.io/midas-daily-202401/2024/01/20240116/index.html" title="20240116: 261 events, 20 up">16</a>
+<a class="cal-day cat-major" href="https://charliebai605.github.io/midas-daily-202401/2024/01/20240117/index.html" title="20240117: 268 events, 9 up, CWA/大事件">17</a>
+<a class="cal-day cat-major" href="https://charliebai605.github.io/midas-daily-202401/2024/01/20240118/index.html" title="20240118: 292 events, 8 up, CWA/大事件">18</a>
+<a class="cal-day cat-active" href="https://charliebai605.github.io/midas-daily-202401/2024/01/20240119/index.html" title="20240119: 251 events, 9 up">19</a>
+<a class="cal-day cat-major" href="https://charliebai605.github.io/midas-daily-202401/2024/01/20240120/index.html" title="20240120: 239 events, 14 up, CWA/大事件">20</a>
+<a class="cal-day cat-major" href="https://charliebai605.github.io/midas-daily-202401/2024/01/20240121/index.html" title="20240121: 544 events, 11 up, CWA/大事件">21</a>
+<a class="cal-day cat-major" href="https://charliebai605.github.io/midas-daily-202401/2024/01/20240122/index.html" title="20240122: 1382 events, 5 up, CWA/大事件">22</a>
+<a class="cal-day cat-major" href="https://charliebai605.github.io/midas-daily-202401/2024/01/20240123/index.html" title="20240123: 920 events, 11 up, CWA/大事件">23</a>
+<a class="cal-day cat-major" href="https://charliebai605.github.io/midas-daily-202401/2024/01/20240124/index.html" title="20240124: 161 events, 10 up, CWA/大事件">24</a>
+<a class="cal-day cat-active" href="https://charliebai605.github.io/midas-daily-202401/2024/01/20240125/index.html" title="20240125: 131 events, 11 up">25</a>
+<a class="cal-day cat-active" href="https://charliebai605.github.io/midas-daily-202401/2024/01/20240126/index.html" title="20240126: 118 events, 12 up">26</a>
+<a class="cal-day cat-active" href="https://charliebai605.github.io/midas-daily-202401/2024/01/20240127/index.html" title="20240127: 135 events, 18 up">27</a>
+<a class="cal-day cat-active" href="https://charliebai605.github.io/midas-daily-202401/2024/01/20240128/index.html" title="20240128: 198 events, 84 up">28</a>
+<a class="cal-day cat-major" href="https://charliebai605.github.io/midas-daily-202401/2024/01/20240129/index.html" title="20240129: 224 events, 26 up, CWA/大事件">29</a>
+<a class="cal-day cat-major" href="https://charliebai605.github.io/midas-daily-202401/2024/01/20240130/index.html" title="20240130: 383 events, 25 up, CWA/大事件">30</a>
+<a class="cal-day cat-major" href="https://charliebai605.github.io/midas-daily-202401/2024/01/20240131/index.html" title="20240131: 89 events, 27 up, CWA/大事件">31</a>
+<div class="cal-day cal-pad"></div>
+<div class="cal-day cal-pad"></div>
+<div class="cal-day cal-pad"></div>
+</div></div></div></div>
+<script>
+function showYear(y){
+  document.querySelectorAll('.year-tab').forEach(function(b){
+    b.classList.toggle('active', b.dataset.year === String(y));
+  });
+  document.querySelectorAll('.year-panel').forEach(function(p){
+    p.classList.toggle('active', p.id === 'year-' + y);
+  });
+}
+</script>
 </body>
 </html>
